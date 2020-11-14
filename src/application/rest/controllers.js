@@ -10,28 +10,32 @@ const MetricsController = () => {
       console.log(err);
       return res.status(500).json({ msg: 'Internal server error' });
     }
-  }
+  };
 
   const postMetric = async (req, res) => {
     try {
-      const key = req.params.key;
-      const value = req.body.value;
+      const {
+        params: { key },
+        body: { value },
+      } = req;
 
       Timeseries().addValue(key, value);
 
       const values = Timeseries().getValues();
       const timestamps = Timeseries().getTimestamps();
 
+      console.log(Timeseries().values);
+
       return res.status(200).json({ values, timestamps });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ msg: 'Internal server error' });
     }
-  }
+  };
 
   return {
     getMetricSum,
-    postMetric
+    postMetric,
   };
 };
 

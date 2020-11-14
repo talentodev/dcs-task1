@@ -12,16 +12,13 @@
     "url": "https://github.com/aichbauer/express-rest-api-boilerplate/issues"
   },
   "scripts": {
-    "prestart": "npm run drop-sqlite-db || true",
     "start": "npm run nodemon",
-    "poststart": "npm run create-sqlite-db",
     "dev": "cross-env NODE_ENV=development node ./src/application/rest.js",
     "nodemon": "nodemon --exec npm run dev",
-    "lint": "eslint ./src/. ./config/. ./test/.",
-    "prepush": "npm test",
-    "pretest": "npm run lint",
+    "lint": "eslint ./src/. ./test/.",
+    "prepush": "",
     "production": "cross-env NODE_ENV=production node ./src/application/rest.js",
-    "test": "npm run create-sqlite-db; cross-env NODE_ENV=testing jest --coverage; npm run drop-sqlite-db",
+    "test": "cross-env NODE_ENV=testing jest --coverage",
     "test-ci": "jest --coverage --forceExit"
   },
   "jest": {
@@ -49,10 +46,13 @@
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "husky": "^0.14.3",
     "jest": "^24.8.0",
     "nodemon": "^1.17.3",
+    "prettier": "^2.1.2",
     "shx": "^0.2.2",
     "supertest": "^3.0.0"
   },
