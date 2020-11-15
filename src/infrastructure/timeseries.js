@@ -20,7 +20,7 @@ const Timeseries = () => {
 
   const findFirstIndexFromLastHour = () => {
     const ONE_HOUR = 60 * 60 * 1000;
-    const lastHourTimestamp = new Date().getTime() - ONE_HOUR;
+    const lastHourTimestamp = Date.now() - ONE_HOUR;
 
     let index = bs(this.timestamps, lastHourTimestamp);
     if (index === -1) {
@@ -42,7 +42,6 @@ const Timeseries = () => {
         sum += this.values[i][key];
       }
     }
-    console.log(key, sum);
     return sum;
   };
 
