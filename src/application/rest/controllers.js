@@ -23,10 +23,9 @@ const MetricsController = () => {
 
       const values = Timeseries().getValues();
       const timestamps = Timeseries().getTimestamps();
+      const sum = Timeseries().getSumFromLastHour(key);
 
-      console.log(Timeseries().values);
-
-      return res.status(200).json({ values, timestamps });
+      return res.status(200).json({ values, timestamps, sum });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ msg: 'Internal server error' });

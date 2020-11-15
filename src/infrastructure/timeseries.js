@@ -1,13 +1,4 @@
-/**
- * two arrays
- *
- * the first consists of a series of timestamps indexed by incrementing int
- * the second is paired with the first by index
- *      each item is an object which indexes corresponds to the metrics name
- *      and the value is an array containing all values sent to the structure
- *      at the corresponding timestamp
- *
- */
+const bs = require('binarysearch');
 
 const Timeseries = () => {
   if (typeof this.values === 'undefined') {
@@ -27,10 +18,39 @@ const Timeseries = () => {
   const getValues = () => this.values;
   const getTimestamps = () => this.timestamps;
 
+  const findFirstIndexFromLastHour = () => {
+    const ONE_HOUR = 60 * 60 * 1000;
+    const lastHourTimestamp = new Date().getTime() - ONE_HOUR;
+
+    let index = bs(this.timestamps, lastHourTimestamp);
+    if (index === -1) {
+      // there isn't the timestamp we want; find the first timestamp latter than lastHourTimestamp
+      index = bs.closest(this.timestamps, lastHourTimestamp);
+      if (this.timestamps[index] < lastHourTimestamp) {
+        index += 1;
+      }
+    }
+    return index;
+  };
+
+  const getSumFromLastHour = (key) => {
+    const startIndex = findFirstIndexFromLastHour();
+
+    let sum = 0;
+    for (i = startIndex; i < this.values.length; i++) {
+      if (typeof this.values[i][key] !== 'undefined') {
+        sum += this.values[i][key];
+      }
+    }
+    console.log(key, sum);
+    return sum;
+  };
+
   return {
     addValue,
     getValues,
     getTimestamps,
+    getSumFromLastHour,
   };
 };
 
