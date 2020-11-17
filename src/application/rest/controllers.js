@@ -1,34 +1,31 @@
-const Timeseries = require('../../infrastructure/timeseries');
+const {
+  Timeseries,
+  getSumFromLastHour,
+} = require('../../infrastructure/timeseries');
+const PostMetricsDto = require('../../domain/postMetricsDto');
 
 const MetricsController = () => {
-  const getMetricSum = async (req, res) => {
+  const getMetricSum = (req, res) => {
     try {
-      const result = Timeseries().getValues();
+      const sum = getSumFromLastHour(req.params.key);
 
-      return res.status(200).json({ result });
+      return res.status(200).json({ sum });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ msg: 'Internal server error' });
     }
   };
 
-  const postMetric = async (req, res) => {
+  const postMetric = (req, res) => {
     try {
-      const {
-        params: { key },
-        body: { value },
-      } = req;
+      const dto = new PostMetricsDto(req.params.key, req.body.value);
 
-      Timeseries().addValue(key, value);
+      Timeseries().addValue(dto);
 
-      const values = Timeseries().getValues();
-      const timestamps = Timeseries().getTimestamps();
-      const sum = Timeseries().getSumFromLastHour(key);
-
-      return res.status(200).json({ values, timestamps, sum });
+      return res.status(200).json();
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: 'Internal server error' });
+      return res.status(500).json({ msg: err });
     }
   };
 

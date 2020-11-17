@@ -9,13 +9,16 @@ const Timeseries = () => {
   const getValues = () => this.values;
   const getTimestamps = () => this.timestamps;
 
-  const addValue = (key, value) => {
-    const index = this.timestamps.push(Date.now()) - 1;
+  const addValue = (dto) => {
+    const key = dto.getKey();
+    const value = dto.getValue();
 
-    if (typeof this.values[index] === 'undefined') {
-      this.values[index] = {};
+    const addedIndex = this.timestamps.push(Date.now()) - 1;
+
+    if (typeof this.values[addedIndex] === 'undefined') {
+      this.values[addedIndex] = {};
     }
-    this.values[index][key] = value;
+    this.values[addedIndex][key] = value;
   };
 
   const pruneValues = () => {
@@ -39,9 +42,13 @@ const Timeseries = () => {
 };
 
 const getSumFromLastHour = (key) => {
+  const values = Timeseries().getValues();
+  if (values.length == 0) {
+    return 0;
+  }
+
   const ONE_HOUR = 60 * 60 * 1000;
   const lastHourTimestamp = Date.now() - ONE_HOUR;
-  const values = Timeseries().getValues();
   const timestamps = Timeseries().getTimestamps();
   const startIndex = findFirstIndexAfterTimestamp(
     timestamps,

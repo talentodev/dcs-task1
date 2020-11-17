@@ -2,15 +2,16 @@ const {
   Timeseries,
   findFirstIndexAfterTimestamp,
   getSumFromLastHour,
-} = require('../../src/infrastructure/timeseries');
+} = require('../src/infrastructure/timeseries');
+const PostMetricsDto = require('../src/domain/postMetricsDto');
 
 let timeseries;
 
-beforeAll(async () => {
+beforeAll(() => {
   timeseries = Timeseries();
 });
 
-test('findFirstIndexAfterTimestamp returns the proper index', async () => {
+test('findFirstIndexAfterTimestamp returns the proper index', () => {
   const mockTimestamps = [3, 7, 9, 9, 50, 52];
 
   expect(findFirstIndexAfterTimestamp(mockTimestamps, 1)).toBe(0);
@@ -20,10 +21,15 @@ test('findFirstIndexAfterTimestamp returns the proper index', async () => {
   expect(findFirstIndexAfterTimestamp(mockTimestamps, 51)).toBe(5);
 });
 
-test('Adding values to timeseries data structure works', async () => {
-  timeseries.addValue('test', 1);
-  timeseries.addValue('test', 2);
-  timeseries.addValue('mock', 5);
+test('Adding values to timeseries data structure works', () => {
+  let dto = new PostMetricsDto('test', 1);
+  timeseries.addValue(dto);
+
+  dto = new PostMetricsDto('test', 2);
+  timeseries.addValue(dto);
+
+  dto = new PostMetricsDto('mock', 5);
+  timeseries.addValue(dto);
 
   expect(timeseries.getValues()).toStrictEqual([
     {
@@ -41,10 +47,11 @@ test('Adding values to timeseries data structure works', async () => {
   expect(timeseries.getTimestamps()).toHaveLength(3);
 });
 
-test('Adding more values to timeseries data structure works', async () => {
+test('Adding more values to timeseries data structure works', () => {
   const currentTimestamp = Date.now();
 
-  timeseries.addValue('test', 3);
+  let dto = new PostMetricsDto('test', 3);
+  timeseries.addValue(dto);
 
   expect(timeseries.getValues()).toStrictEqual([
     {
@@ -64,11 +71,15 @@ test('Adding more values to timeseries data structure works', async () => {
   expect(timeseries.getTimestamps()[3]).toBe(currentTimestamp);
 });
 
-test('getSum returns the summation of only the desired metric', async () => {
+test('getSum returns 0 if no value is added for the key', () => {
+  expect(getSumFromLastHour('dummy')).toBe(0);
+});
+
+test('getSum returns the summation of only the desired metric', () => {
   expect(getSumFromLastHour('test')).toBe(6);
 });
 
-test('getSum returns the summation of records from the last hour only', async () => {
+test('getSum returns the summation of records from the last hour only', () => {
   const currentTimestamp = Date.now();
   const FORTY_MINUTES = 40 * 60 * 1000;
 
@@ -77,14 +88,16 @@ test('getSum returns the summation of records from the last hour only', async ()
     .mockImplementationOnce(() => currentTimestamp + FORTY_MINUTES)
     .mockImplementationOnce(() => currentTimestamp + FORTY_MINUTES * 2)
     .mockImplementationOnce(() => currentTimestamp + FORTY_MINUTES * 2);
-  timeseries.addValue('test', 10);
-  timeseries.addValue('test', 10);
+
+  let dto = new PostMetricsDto('test', 10);
+  timeseries.addValue(dto);
+  timeseries.addValue(dto);
 
   expect(getSumFromLastHour('test')).toBe(20);
   dateNowSpy.mockRestore();
 });
 
-test('pruneValues removes any register added before last hour', async () => {
+test('pruneValues removes any register added before last hour', () => {
   const currentTimestamp = Date.now();
   const FORTY_MINUTES = 40 * 60 * 1000;
 
