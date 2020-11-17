@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run nodemon",
     "dev": "cross-env NODE_ENV=development node ./src/application/rest.js",
-    "nodemon": "nodemon --exec npm run dev",
+    "nodemon": "nodemon --exec npm run dev > logs/log.txt 2> logs/error.txt",
     "lint": "eslint ./src/. ./test/.",
     "prepush": "npm run test",
     "production": "cross-env NODE_ENV=production node ./src/application/rest.js",
@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "binarysearch": "^1.0.1",
-    "body-parser": "^1.18.2",
     "core-js": "^2.6.9",
     "express": "^4.16.3",
-    "express-routes-mapper": "^1.0.2"
+    "express-routes-mapper": "^1.0.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "babel-jest": "^23.6.0",

@@ -2,6 +2,7 @@ const {
   Timeseries,
   getSumFromLastHour,
 } = require('../../infrastructure/timeseries');
+const { Error } = require('../../infrastructure/logger');
 const PostMetricsDto = require('../../domain/postMetricsDto');
 
 const MetricsController = () => {
@@ -11,8 +12,8 @@ const MetricsController = () => {
 
       return res.status(200).json({ sum });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ msg: 'Internal server error' });
+      Error(err);
+      return res.status(500).json({ msg: err });
     }
   };
 
@@ -24,7 +25,7 @@ const MetricsController = () => {
 
       return res.status(200).json();
     } catch (err) {
-      console.log(err);
+      Error(err, 'postMetric', req.params, req.body);
       return res.status(500).json({ msg: err });
     }
   };
