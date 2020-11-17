@@ -6,6 +6,23 @@ const { Error } = require('../../infrastructure/logger');
 const PostMetricsDto = require('../../domain/postMetricsDto');
 
 const MetricsController = () => {
+  /**
+   * @api {get} /metric/:key/sum Metric Sum
+   * @apiName GetMetricSum
+   * @apiGroup Metrics
+   * @apiDescription Returns the sum of all values added in the last hour for the given key
+   * @apiExample Example:
+   *     http://localhost:5000/metric/abcdefg/sum
+   *
+   * @apiParam (Request param) {String} key Key to get the sum
+   *
+   * @apiSuccess {Integer} sum Sum of all values added in the last hour for the given key
+   * @apiSuccessExample {json} Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "sum": 5,
+   *     }
+   */
   const getMetricSum = (req, res) => {
     try {
       const sum = getSumFromLastHour(req.params.key);
@@ -17,6 +34,35 @@ const MetricsController = () => {
     }
   };
 
+  /**
+   * @api {post} /metric/:key Add Metric Value
+   * @apiName PostMetric
+   * @apiGroup Metrics
+   * @apiDescription Add a new value for the given key
+   * @apiExample Example:
+   *     http://localhost:5000/metric/abcdefg
+   *
+   * @apiParam (Request param) {String} key Key to get the sum
+   * @apiParam (Request body) {Number} value Value of the metric (floats will be rounded to the nearest integer)
+   * @apiParamExample {json} Request-Example:
+   *     {
+   *          "value": 50
+   *     }
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *
+   * @apiErrorExample {json} Error-Response:
+   *     HTTP/1.1 400 Bad Request
+   *     {
+   *       "msg": "field 'value' must be a number"
+   *     }
+   * @apiErrorExample {json} Error-Response:
+   *     HTTP/1.1 400 Bad Request
+   *     {
+   *       "msg": "field 'value' is required"
+   *     }
+   */
   const postMetric = (req, res) => {
     try {
       const dto = new PostMetricsDto(req.params.key, req.body.value);
@@ -26,7 +72,7 @@ const MetricsController = () => {
       return res.status(200).json();
     } catch (err) {
       Error(err, 'postMetric', req.params, req.body);
-      return res.status(500).json({ msg: err });
+      return res.status(400).json({ msg: err });
     }
   };
 

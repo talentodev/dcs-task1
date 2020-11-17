@@ -1,9 +1,9 @@
 {
-  "name": "task2",
+  "name": "task1",
   "version": "0.0.0",
   "author": "Marcelo Côrtes",
   "scripts": {
-    "start": "npm run nodemon",
+    "start": "apidoc -i src/ -o apidoc/ && npm run nodemon",
     "dev": "cross-env NODE_ENV=development node ./src/application/rest.js",
     "nodemon": "nodemon --exec npm run dev > logs/log.txt 2> logs/error.txt",
     "lint": "eslint ./src/. ./test/.",

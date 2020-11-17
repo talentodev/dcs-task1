@@ -15,6 +15,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 app.use(morgan('combined'));
+app.use('/apidoc', express.static(__dirname + '/../../apidoc'));
 
 app.use('/', mapRoutes(routes, 'src/application/rest/'));
 

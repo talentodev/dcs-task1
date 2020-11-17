@@ -19,15 +19,18 @@ const Timeseries = () => {
       this.values[addedIndex] = {};
     }
     this.values[addedIndex][key] = value;
+    pruneValues();
   };
 
-  const pruneValues = () => {
-    const ONE_HOUR = 60 * 60 * 1000;
-    const lastHourTimestamp = Date.now() - ONE_HOUR;
-    const startIndex = findFirstIndexAfterTimestamp(
-      getTimestamps(),
-      lastHourTimestamp
-    );
+  const pruneValues = (startIndex) => {
+    if (!startIndex) {
+      const ONE_HOUR = 60 * 60 * 1000;
+      const lastHourTimestamp = Date.now() - ONE_HOUR;
+      startIndex = findFirstIndexAfterTimestamp(
+        getTimestamps(),
+        lastHourTimestamp
+      );
+    }
 
     this.values = this.values.slice(startIndex);
     this.timestamps = this.timestamps.slice(startIndex);
@@ -61,6 +64,7 @@ const getSumFromLastHour = (key) => {
       sum += values[i][key];
     }
   }
+  Timeseries().pruneValues(startIndex);
   return sum;
 };
 

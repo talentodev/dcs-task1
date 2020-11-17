@@ -11,6 +11,10 @@ beforeAll(() => {
   timeseries = Timeseries();
 });
 
+test('getSum returns 0 if no value is added', () => {
+  expect(getSumFromLastHour('dummy')).toBe(0);
+});
+
 test('findFirstIndexAfterTimestamp returns the proper index', () => {
   const mockTimestamps = [3, 7, 9, 9, 50, 52];
 
@@ -48,9 +52,9 @@ test('Adding values to timeseries data structure works', () => {
 });
 
 test('Adding more values to timeseries data structure works', () => {
+  let dto = new PostMetricsDto('test', 3);
   const currentTimestamp = Date.now();
 
-  let dto = new PostMetricsDto('test', 3);
   timeseries.addValue(dto);
 
   expect(timeseries.getValues()).toStrictEqual([
@@ -69,10 +73,6 @@ test('Adding more values to timeseries data structure works', () => {
   ]);
 
   expect(timeseries.getTimestamps()[3]).toBe(currentTimestamp);
-});
-
-test('getSum returns 0 if no value is added for the key', () => {
-  expect(getSumFromLastHour('dummy')).toBe(0);
 });
 
 test('getSum returns the summation of only the desired metric', () => {
