@@ -28,13 +28,13 @@ $ npm start
 ```
 
 the API runs on port 5000.\
-You may change it setting an environment variable 'PORT' or altering the file `src/application/rest.js`
+You may change it setting an environment variable 'PORT' or altering the file `src/application/rest.js`.
+
+Logs are written into `logs` folder.
 
 ## Documentation
 
-While running the API, access the route `/apidoc`
-
-[localhost:5000/apidoc](localhost:5000/apidoc)
+While running the API, you can access the docs on the route `/apidoc`
 
 After the first run of the API you can access the docs at `apidoc/index.html`
 
