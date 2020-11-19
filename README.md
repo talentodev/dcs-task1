@@ -16,7 +16,7 @@ $ git clone https://github.com/talentodev/dcs-task1.git
 
 if you don't have NodeJS 12+, Volta can handle that for you
 
-[Install Volta](https://docs.volta.sh/guide/getting-started)
+[Just Install Volta](https://docs.volta.sh/guide/getting-started)
 
 then
 
