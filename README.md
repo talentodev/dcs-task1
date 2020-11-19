@@ -1,13 +1,22 @@
 # Deep Consulting Solutions Interview Test 1
 
+## Requirements
+
+- NodeJs 12+
+- Npm
+
 ## Install and Use
 
 Start by cloning this repository
 
 ```sh
 # HTTPS
-$ git clone https://github.com/
+$ git clone https://github.com/talentodev/dcs-task1.git
 ```
+
+if you don't have NodeJS 12+, Volta can handle that for you
+
+[Install Volta](https://docs.volta.sh/guide/getting-started)
 
 then
 
@@ -18,13 +27,19 @@ $ npm i
 $ npm start
 ```
 
-the API runs on port 5000.
-You may change it setting an environment variable 'PORT' or altering the file 'src/application/rest.js'
+the API runs on port 5000.\
+You may change it setting an environment variable 'PORT' or altering the file `src/application/rest.js`
 
 ## Documentation
 
-localhost:5000/apidoc
+While running the API, access the route `/apidoc`
+
+[localhost:5000/apidoc](localhost:5000/apidoc)
+
+After the first run of the API you can access the docs at `apidoc/index.html`
 
 ## Test
 
-All test for this boilerplate uses [Jest](https://github.com/facebook/jest) and [supertest](https://github.com/visionmedia/superagent) for integration testing. So read their docs on further information.
+```sh
+$ npm run test
+```
