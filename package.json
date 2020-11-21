@@ -4,7 +4,7 @@
   "author": "Marcelo Côrtes",
   "scripts": {
     "start": "mkdir -p logs && apidoc -i src/ -o apidoc/ && npm run nodemon",
-    "nodemon": "nodemon --exec cross-env node ./src/application/rest.js > logs/log.txt 2> logs/error.txt",
+    "nodemon": "nodemon --exec cross-env node ./src/rest.js > logs/log.txt 2> logs/error.txt",
     "lint": "eslint ./src/. ./test/.",
     "prepush": "npm run test",
     "test": "cross-env NODE_ENV=testing jest --coverage"

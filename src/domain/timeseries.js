@@ -69,13 +69,9 @@ const getSumFromLastHour = (key) => {
 };
 
 const findFirstIndexAfterTimestamp = (haystack, needle) => {
-  let index = bs(haystack, needle);
-  if (index === -1) {
-    // there isn't the timestamp we want; find the first timestamp latter than needle
-    index = bs.closest(haystack, needle);
-    if (haystack[index] < needle) {
-      index += 1;
-    }
+  index = bs.closest(haystack, needle);
+  if (haystack[index] < needle) {
+    index += 1;
   }
   return index;
 };

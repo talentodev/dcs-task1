@@ -1,9 +1,16 @@
-const {
-  Timeseries,
-  getSumFromLastHour,
-} = require('../../infrastructure/timeseries');
-const { Error } = require('../../infrastructure/logger');
-const PostMetricsDto = require('../../domain/postMetricsDto');
+const { Timeseries, getSumFromLastHour } = require('../domain/timeseries');
+const PostMetricsDto = require('../domain/postMetricsDto');
+
+const Error = (message, method, params, body) => {
+  console.error(Date() + '(' + Date.now() + ')');
+  console.error('Method: ' + method);
+  console.error('Message: ' + message);
+  process.stderr.write('With params: ');
+  console.error(params);
+  process.stderr.write('With body: ');
+  console.error(body);
+  console.error();
+};
 
 const MetricsController = () => {
   /**

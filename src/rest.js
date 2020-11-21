@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const mapRoutes = require('express-routes-mapper');
-const routes = require('./rest/routes');
+const routes = require('./application/routes');
 const morgan = require('morgan');
 
 const port = process.env.PORT || 5000;
@@ -17,6 +17,6 @@ app.use(function (err, req, res, next) {
 app.use(morgan('combined'));
 app.use('/apidoc', express.static(__dirname + '/../../apidoc'));
 
-app.use('/', mapRoutes(routes, 'src/application/rest/'));
+app.use('/', mapRoutes(routes, 'src/application/'));
 
 server.listen(port);

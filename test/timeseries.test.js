@@ -2,7 +2,7 @@ const {
   Timeseries,
   findFirstIndexAfterTimestamp,
   getSumFromLastHour,
-} = require('../src/infrastructure/timeseries');
+} = require('../src/domain/timeseries');
 const PostMetricsDto = require('../src/domain/postMetricsDto');
 
 let timeseries;
