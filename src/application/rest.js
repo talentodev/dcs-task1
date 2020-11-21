@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const mapRoutes = require('express-routes-mapper');
-const routes = require('./application/routes');
+const routes = require('./routes');
 const morgan = require('morgan');
 
 const port = process.env.PORT || 5000;
