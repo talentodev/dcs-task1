@@ -4,10 +4,10 @@
   "author": "Marcelo Côrtes",
   "scripts": {
     "start": "mkdir -p logs && apidoc -i src/ -o apidoc/ && npm run nodemon",
-    "nodemon": "nodemon --exec cross-env node ./src/application/rest.js > logs/log.txt 2> logs/error.txt",
+    "nodemon": "nodemon --exec node ./src/application/rest.js > logs/log.txt 2> logs/error.txt",
     "lint": "eslint ./src/. ./test/.",
     "prepush": "npm run test",
-    "test": "cross-env NODE_ENV=testing jest --coverage"
+    "test": "jest --coverage"
   },
   "jest": {
     "globals": {
@@ -28,7 +28,6 @@
   "devDependencies": {
     "babel-jest": "^23.6.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^6.15.0",

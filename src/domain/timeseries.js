@@ -31,9 +31,10 @@ const Timeseries = () => {
         lastHourTimestamp
       );
     }
-
-    this.values = this.values.slice(startIndex);
-    this.timestamps = this.timestamps.slice(startIndex);
+    if (startIndex > 0) {
+      this.values = this.values.slice(startIndex);
+      this.timestamps = this.timestamps.slice(startIndex);
+    }
   };
 
   return {
