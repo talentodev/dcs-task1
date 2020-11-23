@@ -4,8 +4,9 @@
   "author": "Marcelo Côrtes",
   "scripts": {
     "start": "mkdir -p logs && npm run ig && apidoc -i src/ -o apidoc/ && npm run nodemon",
+    "dev": "mkdir -p logs && npm run nodemon",
     "nodemon": "nodemon --exec node ./src/application/rest.js > logs/log.txt 2> logs/error.txt",
-    "ig": "npm i -g apidoc",
+    "ig": "sudo npm i -g apidoc",
     "lint": "eslint ./src/. ./test/.",
     "prepush": "npm run test",
     "test": "jest --coverage"
