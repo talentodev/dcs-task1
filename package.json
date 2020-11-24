@@ -11,7 +11,7 @@
     "lint": "eslint ./src/. ./test/.",
     "prepush": "npm run test",
     "test": "jest --coverage",
-    "prod": "npm run generate-apidoc && node ./src/application/rest.js > logs/log.txt 2> logs/error.txt"
+    "prod": "npm run generate-apidoc && node ./src/application/rest.js"
   },
   "jest": {
     "globals": {

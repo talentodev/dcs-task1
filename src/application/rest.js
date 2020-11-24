@@ -5,7 +5,7 @@ const routes = require('./routes');
 const morgan = require('morgan');
 
 const port = process.env.PORT || 5000;
-console.log(port);
+console.log(object);
 
 const app = express();
 const server = http.Server(app);
