@@ -9,7 +9,6 @@ RUN npm i -g apidoc
 RUN mkdir -p logs
 
 ENV PORT=80
-EXPOSE 80
 
 COPY . .
 
