@@ -16,7 +16,9 @@ app.use(function (err, req, res, next) {
 });
 app.use(morgan('combined'));
 app.use('/apidoc', express.static(__dirname + '/../../apidoc'));
-
+app.get('/', (req, res) => {
+  res.send('It works!');
+});
 app.use('/', mapRoutes(routes, 'src/application/'));
 
 server.listen(port);
