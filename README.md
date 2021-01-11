@@ -1,5 +1,7 @@
 # Deep Consulting Solutions Interview Test 1
 
+[Instructions](./task1.pdf)
+
 ## Requirements
 
 - NodeJs 12+
